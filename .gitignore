@@ -3,3 +3,11 @@
 ################################################################################
 
 *.obj
+/SFML-Game-Test/.vs/SFML-Game-Test/v16
+/SFML-Game-Test/Debug
+/SFML-Game-Test/x64/Debug
+/.vs
+/SFML-Game-Test/SFML-Game-Test.vcxproj.user
+/SFML-Game-Test/SFML-Game-Test.vcxproj.filters
+/SFML-Game-Test/SFML-Game-Test.vcxproj
+/SFML-Game-Test/SFML-Game-Test.sln
