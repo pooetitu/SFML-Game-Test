@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include <iostream>
 
 Player::Player(sf::RenderWindow& window) :Entity(window) {
 	circle.setFillColor(sf::Color::Red);
@@ -17,7 +18,14 @@ void Player::onDraw() {
 	update();
 }
 void Player::update() {
-
+	sf::Mouse mouse;
+	sf::Vector2f coord = this->getWindow()->mapPixelToCoords(mouse.getPosition(*this->getWindow()));
+	double x1 = circle.getPosition().x;
+	double x2 = coord.x;
+	double y1 = circle.getPosition().y;
+	double y2 = coord.y;
+	double angle = atan2(y2 - y1, x2 - x1) * 180 / 3.14;
+	line.setRotation(angle);
 }
 void Player::onEvent(sf::Event event) {
 	
