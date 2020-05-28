@@ -1,15 +1,20 @@
 #include "Game.hpp"
 
-void Player::onDraw(sf::RenderWindow& window) {
-	sf::CircleShape circle;
+Player::Player(sf::RenderWindow& window):Entity(window) {
 	circle.setFillColor(sf::Color::Red);
-	circle.setPosition(5,5);
 	circle.setRadius(20);
-	window.draw(circle);
+	circle.setOrigin(circle.getRadius(), circle.getRadius());
+	circle.setPosition(this->getWindow()->getSize().x / 2, this->getWindow()->getSize().y / 2);
 }
-void Player::onUpdate() {
+
+void Player::onDraw() {
+	this->getWindow()->draw(this->circle);
+}
+void Player::update() {
+	sf::Mouse mouse;
+	mouse.getPosition().x;
 
 }
 void Player::onEvent(sf::Event event) {
-
+	
 }

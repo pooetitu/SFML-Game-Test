@@ -1,9 +1,7 @@
 #include "Client.hpp"
 
-int main()
-{
+int main(){
     Client Client;
-    Client.init();
     Client.start();
     return 0;
 }
