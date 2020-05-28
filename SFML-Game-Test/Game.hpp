@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <list>
+
 class Entity {
 public:
 	Entity(sf::RenderWindow& window);
@@ -21,6 +22,7 @@ private:
 	int health = 10;
 	int bullets = 15;
 	sf::CircleShape circle;
+	sf::RectangleShape line;
 };
 class Game {
 public:

@@ -1,6 +1,5 @@
 #include "Client.hpp"
 
-
 Client::Client() {
     this->loadConfig();
     sf::ContextSettings settings;

@@ -15,7 +15,6 @@ void Game::event(sf::Event& event) {
 	}
 }
 
-
 void Game::addEntity(Entity *entity){
 	this->entitiesList.push_back(entity);
 }

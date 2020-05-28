@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Game.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <json.hpp>
+
+#include "Game.hpp"
 
 using json = nlohmann::json;
 
@@ -17,7 +18,6 @@ struct Config {
 	char antialiasingLevel = 0;
 	bool fullscreen = false;
 	bool vSync = false;
-
 };
 
 class Client {
@@ -26,7 +26,6 @@ private:
 	Game game;
 	Config config;
 	void loadConfig();
-
 
 public:
 	Client();
