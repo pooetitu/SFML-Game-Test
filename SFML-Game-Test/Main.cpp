@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "Client.hpp"
 
 int main()
