@@ -23,7 +23,7 @@ struct Config {
 class Client {
 private:
 	sf::RenderWindow window;
-	Game game;
+	Game* game;
 	Config config;
 	void loadConfig();
 

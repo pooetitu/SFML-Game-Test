@@ -1,24 +1,17 @@
 #include "Game.hpp"
 
-Game::Game(sf::RenderWindow& window) {
-	Player* player = new Player(window);
-	this->addEntity(player);
+Game::Game(sf::RenderWindow* window) {
+	this->entities = new std::list<Entity*>();
+	this->window = window;
+	entities->push_back(new Player(this));
+	
 }
 void Game::draw() {
-	for (Entity* entity : entitiesList) {
-		entity->onDraw();
-	}
+	for (iter = entities->begin(); iter != entities->end(); ++iter)
+		(*iter)->onDraw();
 }
 void Game::event(sf::Event& event) {
-	for (Entity* entity : entitiesList) {
-		entity->onEvent(event);
-	}
+	for (iter = entities->begin(); iter != entities->end(); ++iter)
+		(*iter)->onEvent(event);
 }
 
-void Game::addEntity(Entity *entity){
-	this->entitiesList.push_back(entity);
-}
-
-Entity::Entity(sf::RenderWindow& window) {
-	this->window = &window;
-}

@@ -7,7 +7,7 @@ Client::Client() {
     window.create(sf::VideoMode(config.width, config.height), "SFML game test", sf::Style::Titlebar | sf::Style::Close, settings);
     window.setFramerateLimit(config.framerate);
     window.setVerticalSyncEnabled(config.vSync);
-    game = Game(window);
+    game = new Game(&window);
 
 }
 
@@ -20,11 +20,12 @@ void Client::start() {
             if (event.type == sf::Event::Closed)
                 window.close();
             else
-                game.event(event);
+                game->event(event);
         }
-        window.clear(sf::Color::Black);
-        game.draw();
+        window.clear(sf::Color::White);
+        game->draw();
         window.display();
+
     }
 }
 
