@@ -47,7 +47,7 @@ void Player::onEvent(sf::Event event) {
 
 Bullet::Bullet(Game* game, double angle, sf::Vector2f position) : Entity(game) {
 	double angleR = angle * 3.14 / 180;
-	velocity = sf::Vector2f(std::cos(angleR), std::sin(angleR));
+	velocity = sf::Vector2f(std::cos(angleR), std::sin(angleR))*speed;
 	shape.setRotation(angle);
 	shape.setPosition(position);
 	shape.setSize(sf::Vector2f(5, 5));
