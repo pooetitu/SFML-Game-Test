@@ -55,6 +55,7 @@ private:
 
 class Bullet : public Entity {
 public:
+	~Bullet() {}
 	Bullet(Game* game, double angle, sf::Vector2f position);
 	void onDraw();
 	void update();

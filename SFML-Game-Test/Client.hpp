@@ -1,13 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
-#include <iostream>
-#include <fstream>
-#include <json.hpp>
+
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
+#include <boost/filesystem.hpp>
 
 #include "Game.hpp"
 
-using json = nlohmann::json;
 
 typedef struct Config Config;
 
@@ -26,6 +26,7 @@ private:
 	Game* game;
 	Config config;
 	void loadConfig();
+	void saveConfig();
 
 public:
 	Client();
