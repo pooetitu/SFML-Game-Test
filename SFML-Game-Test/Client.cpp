@@ -1,4 +1,4 @@
-#include "Client.hpp"
+#include "Client.h"
 
 Client::Client() {
     this->loadConfig();
@@ -7,23 +7,29 @@ Client::Client() {
     window.create(sf::VideoMode(config.width, config.height), "SFML game test", sf::Style::Titlebar | sf::Style::Close, settings);
     window.setFramerateLimit(config.framerate);
     window.setVerticalSyncEnabled(config.vSync);
-    game = new Game(&window);
+    scenes = new std::vector<Scene*>();
+    scenes->push_back(new GameScene(&window));
 
 }
 
 void Client::start() {
+    sf::Clock clock;
+    double dt;
     while (window.isOpen())
     {
+        dt = clock.getElapsedTime().asSeconds();
+        //std::cout << dt << std::endl;
+        clock.restart();
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
             else
-                game->event(event);
+                scenes->back()->onEvent(event,dt);
         }
         window.clear(sf::Color::White);
-        game->draw();
+        scenes->back()->onDraw(&window,dt);
         window.display();
 
     }
