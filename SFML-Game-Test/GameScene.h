@@ -17,4 +17,5 @@ private:
 	std::list<Bullet*>* bullets;
 	std::list<Bullet*>::iterator iter;
 	void initRessources();
+	bool checkBulletPosition(sf::RenderWindow* window, Bullet* bullet);
 };
