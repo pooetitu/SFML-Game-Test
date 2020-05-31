@@ -4,34 +4,27 @@ Client::Client() {
     this->loadConfig();
     sf::ContextSettings settings;
     settings.antialiasingLevel = config.antialiasingLevel;
-    window.create(sf::VideoMode(config.width, config.height), "SFML game test", sf::Style::Titlebar | sf::Style::Close, settings);
+    window.create(sf::VideoMode(config.width, config.height), "SFML game test", sf::Style::Titlebar | sf::Style::Close);//, settings);
     window.setFramerateLimit(config.framerate);
     window.setVerticalSyncEnabled(config.vSync);
     scenes = new std::vector<Scene*>();
     scenes->push_back(new GameScene(&window));
-
 }
 
 void Client::start() {
     sf::Clock clock;
     double dt;
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         dt = clock.getElapsedTime().asSeconds();
-        //std::cout << dt << std::endl;
         clock.restart();
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-            else
-                scenes->back()->onEvent(event,dt);
         }
         window.clear(sf::Color::White);
         scenes->back()->onDraw(&window,dt);
         window.display();
-
     }
 }
 
@@ -39,6 +32,8 @@ void Client::loadConfig() {
     boost::property_tree::ptree tree;
     tree.put("config.width",config.width);
     boost::filesystem::path fullPath(boost::filesystem::current_path());
+
+    std::cout << fullPath.string() << std::endl;
     fullPath.append("\\config\\config.ini");
     try {
         if (exists(fullPath) && is_regular_file(fullPath) && !is_empty(fullPath)) {

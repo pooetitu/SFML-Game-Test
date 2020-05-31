@@ -1,18 +1,24 @@
 #include "GameScene.h"
 
 GameScene::GameScene(sf::RenderWindow* window) : Scene() {
+	initRessources();
 	bullets = new std::list<Bullet*>();
-	player = new Player(window, bullets);
+	player = new Player(NULL, &ressources["BULLET"], window, bullets);
+	std::cout << "Loaded GameScene" << std::endl;
 	
 }
-void GameScene::onDraw(sf::RenderWindow* window, double& dt) {
-	for (iter = bullets->begin(); iter != bullets->end(); ++iter)
-		(*iter)->onDraw(window,dt);
-	player->onDraw(window,dt);
+void GameScene::initRessources() {
+	sf::Image image;
+	if (!ressources["BULLET"].loadFromFile("res/sprite/bullet.png")) { 
+		std::cout << "failed" << std::endl;
+	}
 }
-void GameScene::onEvent( sf::Event event, double& dt) {
-	player->onEvent(event,dt);
-	for (iter = bullets->begin(); iter != bullets->end(); ++iter)
-		(*iter)->onEvent(event,dt);
+
+void GameScene::onDraw(sf::RenderWindow* window, double& dt) {
+	for (iter = bullets->begin(); iter != bullets->end(); ++iter) {
+		(*iter)->onDraw(window, dt);
+		(*iter)->onUpdate(dt);
+	}
+	player->onDraw(window,dt);
 }
 

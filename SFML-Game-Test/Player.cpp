@@ -2,7 +2,8 @@
 #include <iostream>
 
 
-Player::Player(sf::RenderWindow* window, std::list<Bullet*>* bullets) : Entity() {
+Player::Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window, std::list<Bullet*>* bullets) : Entity(texture) {
+	this->bulletTexture = bulletTexture;
 	bulletList = bullets;
 	circle.setFillColor(sf::Color::Red);
 	circle.setRadius(20);
@@ -18,9 +19,14 @@ Player::Player(sf::RenderWindow* window, std::list<Bullet*>* bullets) : Entity()
 void Player::onDraw(sf::RenderWindow* window, double& dt) {
 	window->draw(circle);
 	window->draw(line);
-	update(window,dt);
+	onUpdate(dt);
+	updateRotation(window, dt);
+	shoot();
 }
-void Player::update(sf::RenderWindow* window, double& dt) {
+void Player::onUpdate(double& dt) {
+}
+
+void Player::updateRotation(sf::RenderWindow* window, double& dt) {
 	sf::Vector2f coord = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	double x1 = circle.getPosition().x;
 	double x2 = coord.x;
@@ -30,14 +36,10 @@ void Player::update(sf::RenderWindow* window, double& dt) {
 	line.setRotation(angle);
 }
 
-void Player::onEvent(sf::Event event, double& dt) {
+void Player::shoot() {
 	sf::Time elapsed = clock.getElapsedTime();
-	switch (event.type) {
-	case sf::Event::MouseButtonPressed:
-		if (event.mouseButton.button == sf::Mouse::Left && elapsed.asMilliseconds()>600) {
-			bulletList->push_back(new Bullet(angle, circle.getPosition()));
-			clock.restart();
-		}
-		break;
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && elapsed.asMilliseconds()>500) {
+		bulletList->push_back(new Bullet(bulletTexture, angle, circle.getPosition()));
+		clock.restart();
 	}
 }
