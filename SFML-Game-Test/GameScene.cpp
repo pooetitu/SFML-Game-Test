@@ -8,10 +8,12 @@ GameScene::GameScene(sf::RenderWindow* window) : Scene() {
 	
 }
 void GameScene::initRessources() {
-	sf::Image image;
+	sf::Clock cl;
+	sf::Texture texture;
 	if (!ressources["BULLET"].loadFromFile("res/sprite/bullet.png")) { 
 		std::cout << "failed" << std::endl;
 	}
+	std::cout << cl.restart().asMilliseconds() << "millisec" << std::endl;
 }
 
 void GameScene::onDraw(sf::RenderWindow* window, double& dt) {

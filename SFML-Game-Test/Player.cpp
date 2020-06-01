@@ -38,7 +38,7 @@ void Player::updateRotation(sf::RenderWindow* window, double& dt) {
 
 void Player::shoot() {
 	sf::Time elapsed = clock.getElapsedTime();
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && elapsed.asMilliseconds()>500) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&  elapsed.asMilliseconds()>500) {
 		bulletList->push_back(new Bullet(bulletTexture, angle, circle.getPosition()));
 		clock.restart();
 	}

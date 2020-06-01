@@ -7,7 +7,6 @@
 #include "Player.h"
 
 
-
 class GameScene : public Scene {
 public:
 	GameScene(sf::RenderWindow* window);

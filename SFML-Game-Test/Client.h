@@ -9,24 +9,13 @@
 
 #include "GameScene.h"
 #include "Scene.h"
-
-
-typedef struct Config Config;
-
-struct Config {
-	int height = 600;
-	int width = 800;
-	int framerate = 60;
-	char antialiasingLevel = 0;
-	bool fullscreen = false;
-	bool vSync = false;
-};
+#include "Settings.h"
 
 class Client {
 private:
 	sf::RenderWindow window;
 	std::vector<Scene*>* scenes;
-	Config config;
+	Settings settings;
 	void loadConfig();
 	void saveConfig();
 
