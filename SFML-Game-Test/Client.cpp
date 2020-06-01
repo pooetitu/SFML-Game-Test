@@ -9,7 +9,7 @@ Client::Client() {
     window.setFramerateLimit(renderSettings->framerate);
     window.setVerticalSyncEnabled(renderSettings->vSync);
     scenes = new std::vector<Scene*>();
-    scenes->push_back(new GameScene(&window));
+    scenes->push_back(new GameScene(&settings, &window));
 }
 
 void Client::start() {
@@ -22,6 +22,11 @@ void Client::start() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (event.type == sf::Event::KeyReleased) 
+                if(event.key.code == sf::Keyboard::Key(settings.getKeyBinds()->debugMenu))
+                    settings.toggleDebug();
+            
+
         }
         window.clear(sf::Color::White);
         scenes->back()->onDraw(&window,dt);

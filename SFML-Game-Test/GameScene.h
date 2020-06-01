@@ -10,15 +10,9 @@
 
 class GameScene : public Scene {
 public:
-	GameScene(sf::RenderWindow* window);
+	GameScene (Settings* settings, sf::RenderWindow* window);
 	void onDraw(sf::RenderWindow* window, double& dt);
 private:
-#if _DEBUG
-	bool debugging = true;
-#else
-	bool debugging = false;
-#endif
-	
 	DebugMenu debugMenu;
 	Player* player;
 	std::list<Bullet*>* bullets;

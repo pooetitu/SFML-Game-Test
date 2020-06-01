@@ -15,6 +15,7 @@ struct RenderSettings {
 typedef struct KeyBinds KeyBinds;
 
 struct KeyBinds {
+	int debugMenu = sf::Keyboard::Key::F1;
 	int up;
 	int down;
 	int left;
@@ -24,9 +25,16 @@ struct KeyBinds {
 
 class Settings {
 private:
+#if _DEBUG
+	bool debugging = true;
+#else
+	bool debugging = false;
+#endif
 	RenderSettings renderSettings;
 	KeyBinds keyBinds;
 public:
+	bool isDebugging() { return debugging; }
+	void toggleDebug() { debugging ^= 1; }
 	RenderSettings* getRenderSettings() { return &renderSettings; }
 	KeyBinds* getKeyBinds() { return &keyBinds; }
 };

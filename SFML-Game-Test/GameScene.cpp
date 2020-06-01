@@ -1,6 +1,6 @@
 #include "GameScene.h"
 
-GameScene::GameScene(sf::RenderWindow* window) : Scene() {
+GameScene::GameScene (Settings* settings, sf::RenderWindow* window) : Scene(settings) {
 	initRessources();
 	debugMenu = DebugMenu();
 	bullets = new std::list<Bullet*>();
@@ -30,7 +30,7 @@ void GameScene::onDraw(sf::RenderWindow* window, double& dt) {
 	}
 	bullets->swap(toKeep);
 	player->onDraw(window,dt);
-	if (debugging)
+	if (settings->isDebugging())
 		updateDebug(window, count);
 }
 
