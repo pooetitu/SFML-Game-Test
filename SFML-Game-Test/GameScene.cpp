@@ -1,11 +1,13 @@
 #include "GameScene.h"
 
 GameScene::GameScene (Settings* settings, sf::RenderWindow* window) : Scene(settings) {
+	sf::Clock clck;
 	initRessources();
+	initMap();
 	debugMenu = DebugMenu();
 	bullets = new std::list<Bullet*>();
 	player = new Player(NULL, &ressources["BULLET"], window, bullets);
-	std::cout << "Loaded GameScene" << std::endl;
+	std::cout << "Loaded GameScene in " << clck.restart().asSeconds() << std::endl;
 	
 }
 void GameScene::initRessources() {
@@ -16,8 +18,17 @@ void GameScene::initRessources() {
 	}
 	std::cout << cl.restart().asMilliseconds() << "millisec" << std::endl;
 }
+void GameScene::initMap() {
+	tmx::Map* map = new tmx::Map();
+	if (map->load("res/maps/map.tmx"))
+	{
+		this->tileMap = TileMap(map);
+		std::cout << "Map loaded" << std::endl;
+	}
+}
 
 void GameScene::onDraw(sf::RenderWindow* window, double& dt) {
+	tileMap.draw(window);
 	std::list<Bullet*> toKeep;
 	int count = 0;
 	for (iter = bullets->begin(); iter != bullets->end(); ++iter) {

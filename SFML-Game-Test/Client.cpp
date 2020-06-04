@@ -25,10 +25,8 @@ void Client::start() {
             if (event.type == sf::Event::KeyReleased) 
                 if(event.key.code == sf::Keyboard::Key(settings.getKeyBinds()->debugMenu))
                     settings.toggleDebug();
-            
-
         }
-        window.clear(sf::Color::White);
+        window.clear(sf::Color::Black);
         scenes->back()->onDraw(&window,dt);
         window.display();
     }
