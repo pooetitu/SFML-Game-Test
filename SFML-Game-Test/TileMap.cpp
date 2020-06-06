@@ -27,7 +27,7 @@ void TileMap::draw(sf::RenderWindow* window) {
 			if (tile.ID > 0) {
 				sf::Vector2i tilePos((tileCount % chunk.size.x) * 32, (tileCount / chunk.size.y) * 32);
 				sf::Sprite sprite(tileSet);
-				sprite.setTextureRect(sf::IntRect(32 * ((tile.ID - 1) % (tileSet.getSize().x/32)), 32 * ((tile.ID - 1) / (tileSet.getSize().y/32)), 32, 32));
+				sprite.setTextureRect(sf::IntRect(32 * ((tile.ID - 1) % (tileSet.getSize().x/32)), 32 * ((tile.ID - 1) / (tileSet.getSize().x/32)), 32, 32));
 				sprite.setPosition(chunkPos.x + tilePos.x, chunkPos.y + tilePos.y);
 				window->draw(sprite);
 			}
