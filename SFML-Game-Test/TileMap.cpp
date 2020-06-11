@@ -1,13 +1,17 @@
 #include "TileMap.h"
 
 
-TileMap::TileMap(tmx::Map* map) {
+TileMap::TileMap(tmx::Map* map, sf::Vector2f* offsetPosition) : offsetPosition(offsetPosition) {
+
 	const auto& layers = map->getLayers();
 	for (const auto& layer : layers)
 	{
 		if (layer->getType() == tmx::Layer::Type::Object)
 		{
 			objectLayer = layer->getLayerAs<tmx::ObjectGroup>();
+			for (auto const& obj : objectLayer.getObjects()) {
+				collisionRects.push_back(sf::IntRect(obj.getAABB().left, obj.getAABB().top, obj.getAABB().width, obj.getAABB().height));
+			}
 		}
 		else if (layer->getType() == tmx::Layer::Type::Tile)
 		{
@@ -25,7 +29,7 @@ void TileMap::draw(sf::RenderWindow* window) {
 		int tileCount = 0;
 		for (auto const tile : chunk.tiles) {
 			if (tile.ID > 0) {
-				sf::Vector2i tilePos((tileCount % chunk.size.x) * 32, (tileCount / chunk.size.y) * 32);
+				sf::Vector2i tilePos((tileCount % chunk.size.x) * 32 - offsetPosition->x + window->getSize().x /2, (tileCount / chunk.size.y) * 32 - offsetPosition->y + window->getSize().y / 2);
 				sf::Sprite sprite(tileSet);
 				sprite.setTextureRect(sf::IntRect(32 * ((tile.ID - 1) % (tileSet.getSize().x/32)), 32 * ((tile.ID - 1) / (tileSet.getSize().x/32)), 32, 32));
 				sprite.setPosition(chunkPos.x + tilePos.x, chunkPos.y + tilePos.y);
@@ -34,5 +38,4 @@ void TileMap::draw(sf::RenderWindow* window) {
 			tileCount++;
 		}
 	}
-
 }

@@ -7,12 +7,12 @@ private:
 	sf::Font font;
 	int bulletCount;
 	float frameCount;
-	sf::Vector2i mapPosition;
+	sf::Vector2f* mapPosition;
 	void initFont();
 public:
 	DebugMenu();
 	void draw(sf::RenderWindow* window);
 	void setBulletCount(int count) { bulletCount = count; };
 	float* getFrameCount() { return &frameCount; };
-	sf::Vector2i getMapPosition() { return mapPosition; }
+	void setMapPosition(sf::Vector2f* mapPosition) { this->mapPosition = mapPosition; }
 };

@@ -28,6 +28,7 @@ private:
 	void initRessources();
 	void initMap();
 	bool checkBulletPosition(sf::RenderWindow* window, Bullet* bullet);
+	void checkCollisions();
 	void updateDebug(sf::RenderWindow* window, int& bulletCount);
 	void frameCount(float* fps);
 };

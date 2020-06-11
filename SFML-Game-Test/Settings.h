@@ -25,7 +25,7 @@ struct KeyBinds {
 
 class Settings {
 private:
-#if _DEBUG
+#if NDEBUG
 	bool debugging = true;
 #else
 	bool debugging = false;

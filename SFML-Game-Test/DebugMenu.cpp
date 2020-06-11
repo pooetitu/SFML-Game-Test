@@ -19,6 +19,10 @@ void DebugMenu::draw(sf::RenderWindow* window) {
 	str.append(std::to_string(frameCount));
 	str.append("\nBullet Count: ");
 	str.append(std::to_string(bulletCount));
+	str.append("\nMap x: ");
+	str.append(std::to_string(mapPosition->x));
+	str.append("Map y: ");
+	str.append(std::to_string(mapPosition->y));
 	text.setString(str);
 	window->draw(text);
 }

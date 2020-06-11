@@ -16,6 +16,4 @@ private:
 	std::list<Bullet*>* bulletList;
 	sf::CircleShape circle;
 	sf::RectangleShape line;
-	sf::Vector2i mapPosition;
-	sf::Clock clock;
 };
