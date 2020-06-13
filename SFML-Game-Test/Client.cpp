@@ -28,6 +28,7 @@ void Client::start() {
         }
         window.clear(sf::Color::Black);
         scenes->back()->onDraw(&window,dt);
+        scenes->back()->onUpdate(dt);
         window.display();
     }
 }

@@ -1,9 +1,10 @@
 #pragma once
 #include "Bullet.h"
+#define PLAYER_MOVEMENT_SPEED 100.0f;
 
 class Player : public Entity {
 public:
-	Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window,std::list<Bullet*>* bullets);
+	Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window,std::list<Bullet*>* bullets, Camera* camera);
 	void onDraw(sf::RenderWindow* window, double& dt);
 	void onUpdate( double& dt);
 	void shoot();
@@ -14,6 +15,4 @@ private:
 	double angle = 90;
 	sf::Texture* bulletTexture;
 	std::list<Bullet*>* bulletList;
-	sf::CircleShape circle;
-	sf::RectangleShape line;
 };

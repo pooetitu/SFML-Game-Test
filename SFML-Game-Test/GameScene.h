@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System/FileInputStream.hpp>
 
 #include <tmxlite/Map.hpp>
 #include <tmxlite/Layer.hpp>
@@ -14,12 +13,15 @@
 #include "Player.h"
 #include "DebugMenu.h"
 #include "TileMap.h"
+#include "Camera.h"
 
 class GameScene : public Scene {
 public:
 	GameScene (Settings* settings, sf::RenderWindow* window);
 	void onDraw(sf::RenderWindow* window, double& dt);
+	void onUpdate(double& dt);
 private:
+	Camera camera;
 	TileMap tileMap;
 	DebugMenu debugMenu;
 	Player* player;
@@ -29,6 +31,6 @@ private:
 	void initMap();
 	bool checkBulletPosition(sf::RenderWindow* window, Bullet* bullet);
 	void checkCollisions();
-	void updateDebug(sf::RenderWindow* window, int& bulletCount);
+	void updateDebug(int bulletCount);
 	void frameCount(float* fps);
 };

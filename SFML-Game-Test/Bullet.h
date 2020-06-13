@@ -1,5 +1,5 @@
 #pragma once
-#define BULLET_SPEED 160.0f
+#define BULLET_SPEED 250.0f
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -9,7 +9,7 @@
 class Bullet : public Entity {
 public:
 	~Bullet() {}
-	Bullet(sf::Texture* texture, double angle, sf::Vector2f& position);
+	Bullet(sf::Texture* texture, double angle, sf::Vector2f& position, Camera* camera);
 	void onDraw(sf::RenderWindow* window, double& dt);
 	void onUpdate(double& dt);
 private:
