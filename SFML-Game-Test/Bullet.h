@@ -1,5 +1,5 @@
 #pragma once
-#define BULLET_SPEED 250.0f
+#define BULLET_SPEED 5.0f
 
 #include <SFML/Graphics.hpp>
 #include <iostream>

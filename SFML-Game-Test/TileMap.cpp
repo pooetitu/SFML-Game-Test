@@ -44,6 +44,15 @@ TileMap::TileMap(tmx::Map* map, Camera* camera) : camera(camera) {
 		}
 	}
 
+	for (const auto& tileset : map->getTilesets()) {
+		for (const auto& tile : tileset.getTiles()) {
+			for (const auto& obj : tile.objectGroup.getObjects()) {
+				tileCollisions.emplace(tile.ID, obj);
+				std::cout << "Collision added for tile number " << tile.ID << std::endl;
+			}
+		}
+	}
+
 }
 
 

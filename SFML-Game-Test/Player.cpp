@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Player::Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window, std::list<Bullet*>* bullets, Camera* camera) : Entity(texture, NULL, camera) {
+Player::Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window, std::list<Bullet*>* bullets, Camera* camera) : Entity(texture, camera) {
 	this->bulletTexture = bulletTexture;
 	bulletList = bullets;
 	sprite.setTexture(*texture);
@@ -10,9 +10,9 @@ Player::Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindo
 	sprite.setTextureRect(sf::IntRect(0, 0, 37, 30));
 	sprite.setPosition(window->getSize().x / 2, window->getSize().y / 2);
 	sprite.setOrigin(37 / 2, 30 / 2);
-	mapPosition.x = 32 + sprite.getOrigin().x;
-	mapPosition.y = 32 + sprite.getOrigin().y;
-	hitBox = sf::IntRect(sprite.getLocalBounds());
+	mapPosition.x = 1 + sprite.getOrigin().x / 32;
+	mapPosition.y = 1 + sprite.getOrigin().y / 32;
+	hitBox = &sprite.getGlobalBounds();
 }
 
 void Player::onDraw(sf::RenderWindow* window, double& dt) {

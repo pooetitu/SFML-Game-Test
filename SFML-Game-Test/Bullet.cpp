@@ -1,17 +1,18 @@
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Texture* texture,double angle, sf::Vector2f& position, Camera* camera) : Entity(texture, &position, camera) {
+Bullet::Bullet(sf::Texture* texture,double angle, sf::Vector2f& position, Camera* camera) : Entity(texture, camera) {
 	mapPosition = position;
 	double angleR = angle * 3.14 / 180;
 	velocity = sf::Vector2f(std::cos(angleR), std::sin(angleR));
 	sprite.setRotation(angle);
 	sprite.setPosition(position);
 	sprite.setOrigin(sf::Vector2f(2, 2));
-	hitBox = sf::IntRect(sprite.getGlobalBounds());
+	hitBox = &sprite.getGlobalBounds();
+	std::cout << sprite.getGlobalBounds().width / 32<< std::endl;
 }
 
 void Bullet::onDraw(sf::RenderWindow* window, double& dt) {
-	sprite.setPosition(mapPosition.x - mapOffset->x + window->getSize().x/2, mapPosition.y - mapOffset->y + window->getSize().y / 2);
+	sprite.setPosition(camera->worldToCamera(mapPosition));
 	window->draw(sprite);
 	onUpdate(dt);
 }
@@ -21,6 +22,6 @@ void Bullet::onUpdate(double& dt) {
 	dVelocity.x *= dt * speed;
 	dVelocity.y *= dt * speed;
 	mapPosition += dVelocity;
-	hitBox.top = mapPosition.y;
-	hitBox.left = mapPosition.x;
+	hitBox->top = mapPosition.y;
+	hitBox->left = mapPosition.x;
 }

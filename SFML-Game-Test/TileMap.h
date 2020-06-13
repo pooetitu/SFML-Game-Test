@@ -13,7 +13,7 @@ private:
 	std::vector<tmx::TileLayer> tileLayers;
 	std::vector<sf::VertexArray> vertices;
 	sf::Vector2i mapSize;
-
+	std::map<int, tmx::Object> tileCollisions;
 	sf::Texture texture;
 	Camera* camera;
 public:

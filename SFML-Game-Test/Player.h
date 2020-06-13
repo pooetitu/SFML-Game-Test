@@ -1,6 +1,6 @@
 #pragma once
 #include "Bullet.h"
-#define PLAYER_MOVEMENT_SPEED 100.0f;
+#define PLAYER_MOVEMENT_SPEED 2.0f;
 
 class Player : public Entity {
 public:
