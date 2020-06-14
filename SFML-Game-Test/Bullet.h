@@ -9,7 +9,7 @@
 class Bullet : public Entity {
 public:
 	~Bullet() {}
-	Bullet(sf::Texture* texture, double angle, sf::Vector2f& position, Camera* camera);
+	Bullet(sf::Texture* texture, double angle, sf::Vector2f& position, GameData* data);
 	void onDraw(sf::RenderWindow* window, double& dt);
 	void onUpdate(double& dt);
 private:

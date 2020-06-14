@@ -1,6 +1,7 @@
-#include "Bullet.h"
+#include "GameScene.h"
 
-Bullet::Bullet(sf::Texture* texture,double angle, sf::Vector2f& position, Camera* camera) : Entity(texture, camera) {
+
+Bullet::Bullet(sf::Texture* texture,double angle, sf::Vector2f& position, GameData* data) : Entity(texture, data) {
 	mapPosition = position;
 	double angleR = angle * 3.14 / 180;
 	velocity = sf::Vector2f(std::cos(angleR), std::sin(angleR));
@@ -12,7 +13,7 @@ Bullet::Bullet(sf::Texture* texture,double angle, sf::Vector2f& position, Camera
 }
 
 void Bullet::onDraw(sf::RenderWindow* window, double& dt) {
-	sprite.setPosition(camera->worldToCamera(mapPosition));
+	sprite.setPosition(gameData->camera.worldToCamera(mapPosition));
 	window->draw(sprite);
 	onUpdate(dt);
 }

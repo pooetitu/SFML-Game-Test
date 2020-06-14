@@ -1,8 +1,9 @@
 #include "GameScene.h"
 #include <iostream>
+#include <tmxlite/Object.hpp>
 
 
-Player::Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window, std::list<Bullet*>* bullets, Camera* camera) : Entity(texture, camera) {
+Player::Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window, std::vector<Bullet*>* bullets, GameData* data) : Entity(texture, data) {
 	this->bulletTexture = bulletTexture;
 	bulletList = bullets;
 	sprite.setTexture(*texture);
@@ -23,18 +24,24 @@ void Player::onDraw(sf::RenderWindow* window, double& dt) {
 	}
 }
 void Player::onUpdate(double& dt) {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-		mapPosition.y -= dt * PLAYER_MOVEMENT_SPEED;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		mapPosition.y += dt * PLAYER_MOVEMENT_SPEED ;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	std::array<tmx::Object*, 5> collisionObjects = gameData->tileMap.getCollisionObjects(mapPosition);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) ) {
+		if (collisionObjects[2] != NULL) {
+			tmx::Object* obj = collisionObjects[2];
+			if (obj->getType() == "1" && !hitBox->intersects(sf::FloatRect(obj->getAABB().left, obj->getAABB().top, obj->getAABB().width, obj->getAABB().height)))
+				mapPosition.y -= dt * PLAYER_MOVEMENT_SPEED;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		mapPosition.y += dt * PLAYER_MOVEMENT_SPEED;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 		mapPosition.x -= dt * PLAYER_MOVEMENT_SPEED;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
 		mapPosition.x += dt * PLAYER_MOVEMENT_SPEED;
-	camera->setCameraPosition(mapPosition);
+	}
+	gameData->camera.setCameraPosition(mapPosition);
 }
 
 void Player::updateRotation(sf::RenderWindow* window, double& dt) {
@@ -50,7 +57,7 @@ void Player::updateRotation(sf::RenderWindow* window, double& dt) {
 void Player::shoot() {
 	static sf::Clock clock;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && clock.getElapsedTime().asMilliseconds() > 300) {
-		bulletList->push_back(new Bullet(bulletTexture, angle, mapPosition, camera));
+		bulletList->push_back(new Bullet(bulletTexture, angle, mapPosition, gameData));
 		clock.restart();
 	}
 }

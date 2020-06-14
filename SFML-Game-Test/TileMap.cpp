@@ -63,24 +63,33 @@ void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		target.draw(vertice, states);
 }
 
-void update(float& dt) {
+void TileMap::update(float& dt) {
 
 }
 
-/*void TileMap::draw(sf::RenderWindow* window) {
-	for (auto const tileLayer : tileLayers)
-		for (auto const chunk : tileLayer.getChunks()) {
-			sf::Vector2i chunkPos(chunk.position.x, chunk.position.y);
-			int tileCount = 0;
-			for (auto const tile : chunk.tiles) {
-				if (tile.ID > 0) {
-					sf::Vector2i tilePos(camera->worldToCamera(sf::Vector2f(tileCount % chunk.size.x, tileCount / chunk.size.y)));
-					sf::Sprite sprite(tileSet);
-					sprite.setTextureRect(sf::IntRect(32 * ((tile.ID - 1) % (tileSet.getSize().x / 32)), 32 * ((tile.ID - 1) / (tileSet.getSize().x / 32)), 32, 32));
-					sprite.setPosition(chunkPos.x + tilePos.x, chunkPos.y + tilePos.y);
-					window->draw(sprite);
-				}
-				tileCount++;
-			}
-		}
-}*/
+std::array<tmx::Object*, 5> TileMap::getCollisionObjects(sf::Vector2f mapPosition) {
+	int mapsize = mapSize.x * mapSize.y;
+	std::array<tmx::Object*, 5> objects={};
+	int flattenedPosition = mapSize.x * std::floor(mapPosition.y) + std::floor(mapPosition.x);
+	if (flattenedPosition>=0 && flattenedPosition < mapsize && &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID] != NULL ) {
+		objects[0] = &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID];
+	}
+	flattenedPosition = mapSize.x * std::floor(mapPosition.y+1) + std::floor(mapPosition.x );
+	if (flattenedPosition > 0 && flattenedPosition < mapsize && &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID] != NULL) {
+		objects[1] = &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID];
+	}
+	flattenedPosition = mapSize.x * std::floor(mapPosition.y-1) + std::floor(mapPosition.x );
+	if (flattenedPosition > 0 && flattenedPosition < mapsize && &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID] != NULL) {
+		objects[2] = &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID];
+	}
+	flattenedPosition = mapSize.x * std::floor(mapPosition.y) + std::floor(mapPosition.x+1);
+	if (flattenedPosition > 0 && flattenedPosition < mapsize && &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID] != NULL) {
+		objects[3] = &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID];
+	}
+	flattenedPosition = mapSize.x * std::floor(mapPosition.y) + std::floor(mapPosition.x-1);
+	if (flattenedPosition > 0 && flattenedPosition < mapsize && &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID] != NULL) {
+		objects[4] = &tileCollisions[tileLayers.at(0).getTiles().at(flattenedPosition).ID];
+	}
+	return objects;
+}
+

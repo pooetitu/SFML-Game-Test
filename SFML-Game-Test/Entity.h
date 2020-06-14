@@ -1,13 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Camera.h"
 
+typedef struct GameData GameData;
 
 class Entity {
 public:
-	Entity(sf::Texture* texture, Camera* camera) {
+	Entity(sf::Texture* texture, GameData* data) {
 		if (texture != NULL)sprite.setTexture(*texture);
-		this->camera = camera;
+		this->gameData = data;
 	}
 	virtual ~Entity() {}
 	virtual void onDraw(sf::RenderWindow* window, double& dt) = 0;
@@ -15,7 +15,7 @@ public:
 	sf::Vector2f* getPosition() { return &mapPosition; }
 	sf::FloatRect* getHitBox() { return hitBox; }
 protected:
-	Camera* camera;
+	GameData* gameData;
 	sf::FloatRect* hitBox;
 	sf::Vector2f velocity;
 	sf::Vector2f mapPosition;

@@ -1,14 +1,13 @@
 #include "GameScene.h"
 
 GameScene::GameScene (Settings* settings, sf::RenderWindow* window) : Scene(settings) {
-	camera = Camera(settings);
+	data.camera = Camera(settings);
 	sf::Clock clock;
-	debugMenu = DebugMenu();
-	bullets = new std::list<Bullet*>();
-	player = new Player(&ressources["PLAYER"], &ressources["BULLET"], window, bullets, &camera);
+	data.debugMenu = DebugMenu();
+	data.player = new Player(&ressources["PLAYER"], &ressources["BULLET"], window, &data.bullets, &data);
 	initRessources();
 	initMap();
-	debugMenu.setMapPosition(player->getPosition());
+	data.debugMenu.setMapPosition(data.player->getPosition());
 	std::cout << "Loaded GameScene in " << clock.restart().asSeconds() << std::endl;
 	
 }
@@ -25,35 +24,32 @@ void GameScene::initRessources() {
 void GameScene::initMap() {
 	tmx::Map* map = new tmx::Map();
 	if (map->load("res/maps/map.tmx")) {
-		this->tileMap = TileMap(map, &camera);
+		data.tileMap = TileMap(map, &data.camera);
 		std::cout << "Map loaded" << std::endl;
 	}
 }
 
 void GameScene::onDraw(sf::RenderWindow* window, double& dt) {
-	window->draw(tileMap);
-	int count = 0;
-	for (iter = bullets->begin(); iter != bullets->end(); ++iter) {
-		count++;
-		(*iter)->onDraw(window, dt);
-	}
-	player->onDraw(window, dt);
+	window->draw(data.tileMap);
+	for (auto& iter : data.bullets)
+		iter->onDraw(window, dt);
+	data.player->onDraw(window, dt);
 	if (settings->isDebugging())
-		debugMenu.draw(window);
+		data.debugMenu.draw(window);
 
 }
 
 void GameScene::onUpdate(double& dt) {
-	tileMap.setPosition(camera.worldToCamera(sf::Vector2f(0, 0)));
-	player->onUpdate(dt);
+	data.tileMap.setPosition(data.camera.worldToCamera(sf::Vector2f(0, 0)));
+	data.player->onUpdate(dt);
 	if (settings->isDebugging())
-		updateDebug(bullets->size());
+		updateDebug(data.bullets.size());
 
 }
 
 void GameScene::updateDebug(int bulletCount) {
-	debugMenu.setBulletCount(bulletCount);
-	frameCount(debugMenu.getFrameCount());
+	data.debugMenu.setBulletCount(bulletCount);
+	frameCount(data.debugMenu.getFrameCount());
 }
 
 bool GameScene::checkBulletPosition(sf::RenderWindow* window, Bullet* bullet) {

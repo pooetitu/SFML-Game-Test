@@ -4,7 +4,7 @@
 
 class Player : public Entity {
 public:
-	Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window,std::list<Bullet*>* bullets, Camera* camera);
+	Player(sf::Texture* texture, sf::Texture* bulletTexture, sf::RenderWindow* window,std::vector<Bullet*>* bullets, GameData* data);
 	void onDraw(sf::RenderWindow* window, double& dt);
 	void onUpdate( double& dt);
 	void shoot();
@@ -14,5 +14,5 @@ private:
 	int bullets = 15;
 	double angle = 90;
 	sf::Texture* bulletTexture;
-	std::list<Bullet*>* bulletList;
+	std::vector<Bullet*>* bulletList;
 };
